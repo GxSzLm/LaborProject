@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//using LaborProject
+
 namespace LaborProject.Modules.TestCmdWindow.Views
 {
     /// <summary>
@@ -32,6 +34,16 @@ namespace LaborProject.Modules.TestCmdWindow.Views
             TheTextBox.AppendText("Initialize process activated." + Environment.NewLine 
                 + "Initializing..." + Environment.NewLine
                 + " ");
+            //准备好要发送的包
+            Rs232 serial;
+            //做好包的赋值工作
+            //调用发送方法将其发给串口
+            serial.send(byte[] xxx);
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void TheTextBox_TextChanged(object sender, TextChangedEventArgs e)

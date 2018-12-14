@@ -27,9 +27,12 @@
                     Margin="0">
             <Label HorizontalAlignment="Center">AREA 1</Label>
             <Button Name="InitializeButton"
-                    Click="InitializeButton_Click"
-                    VerticalAlignment="Top"
-                    Content="Hit_To_Initialize">
+                    Content="Hit__To__Initialize" Click="InitializeButton_Click"
+                    Margin="5">
+            </Button>
+            <Button x:Name="ResetButton"
+                    Content="Hit__to__Reset" Click="ResetButton_Click"
+                    Margin="5">
             </Button>
         </StackPanel>
 
@@ -38,7 +41,7 @@
 				   VerticalAlignment="Center" Margin="10,10,10,10"
 				   FontSize="24" Text="{Binding Text}"
                    TextWrapping="Wrap">
-            This is the Prototype
+            This is the Prototype of the Project
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{Binding Foreground, FallbackValue=Black}" />
             </TextBlock.Foreground>
@@ -48,7 +51,7 @@
                  Grid.Column="1" Margin="10" 
                  TextChanged="TheTextBox_TextChanged" IsReadOnly="True"
                  Background="White">
-            输出内容显示
+            输出内容显示区域
         </TextBox>
     </Grid>
 </UserControl>
