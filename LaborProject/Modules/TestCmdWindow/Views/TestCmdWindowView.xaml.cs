@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-//using LaborProject
+using LaborProject.Api;
 
 namespace LaborProject.Modules.TestCmdWindow.Views
 {
@@ -35,10 +35,10 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 + "Initializing..." + Environment.NewLine
                 + " ");
             //准备好要发送的包
-            Rs232 serial;
+            Frames frames_inq = new Frames();
             //做好包的赋值工作
             //调用发送方法将其发给串口
-            serial.send(byte[] xxx);
+            frames_inq.send();
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)

@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace LaborProject
 {
-    class Rs232
+    public class Rs232
     {                                                                                                                       
         public SerialPort ComPort;
         public string[] Ports;

@@ -112,12 +112,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Api\FrameDecoder.cs" />
     <Compile Include="Api\Frames.cs" />
+    <Compile Include="Api\Tools.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rs232.cs" />
+    <Compile Include="Serialmanip.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\Home\Module.cs" />
