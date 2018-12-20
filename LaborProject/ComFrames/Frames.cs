@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 
-namespace LaborProject.Api
+namespace LaborProject.ComFrames
 {
     public class Frames
     {
         // 端口物理连接状态查询帧
-        [StructLayout(LayoutKind.Explicit, Size = 5, Pack = 1, CharSet = CharSet.Ansi)]
+        [StructLayout(LayoutKind.Explicit, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]
         public struct Frame_ConnectionStatusInquiry
         {
             [FieldOffset(0)]
@@ -22,6 +22,9 @@ namespace LaborProject.Api
             public byte parameter_type;
             [FieldOffset(3)]
             public ushort inquiry_type;
+            //public ushort inquiry_type;
+            [FieldOffset(5)]
+            public byte fill;
         }
 
         public Frame_ConnectionStatusInquiry frm;               // 使用StructToBytes方法转成byte数组前，进行了内存对齐的结构体。
@@ -32,7 +35,13 @@ namespace LaborProject.Api
             frm.frame_header = 0xff;
             frm.frame_type = 0x01;
             frm.parameter_type = 0x04;
-            frm.inquiry_type = 0x0001;
+
+            frm.inquiry_type = 0x0100;
+            //frm.inquiry_type = new byte[2];
+            //frm.inquiry_type[0] = 0x00;
+            //frm.inquiry_type[1] = 0x01;
+
+            frm.fill = 0x00;
         }
 
         // 发送
@@ -40,9 +49,7 @@ namespace LaborProject.Api
         {
             Serialmanip Serial = new Serialmanip();
             Serial.Com_open();
-
-            Rs232 rs232 = new Rs232();
-            rs232.send(Tools.StructToBytes(frm));
+            Serial.rs232.send(Tools.StructToBytes(frm));
 
             return true;
         }

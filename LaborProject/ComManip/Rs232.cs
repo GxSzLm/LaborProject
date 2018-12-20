@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using System.IO;
 using System.IO.Ports;
 using System.Windows;
-using System.Windows.Threading;
+//using System.Windows.Threading;
 using System.Threading;
 using System.Collections;
+
 
 namespace LaborProject
 {
@@ -74,13 +75,19 @@ namespace LaborProject
             {
                 for (int i = 0; i < Ports.Length; i++)
                 {
+#if DEBUG
+                    Console.WriteLine(Ports[i]);
+#endif
                     ComList.Add(new customer() { com = Ports[i] });//下拉控件里添加可用串口
                 }
+#if DEBUG
+                Console.WriteLine("EOPORTS.");
+#endif
 
             }
             else
             {
-                MessageBox.Show("未找到串口");
+                System.Windows.MessageBox.Show("未找到串口");
             }
         }
 
@@ -151,6 +158,12 @@ namespace LaborProject
                     recBuffer = new byte[ComPort.BytesToRead];//接收数据缓存大小
                     ComPort.Read(recBuffer, 0, recBuffer.Length);//读取数据
                     recQueue.Enqueue(recBuffer);//读取数据入列Enqueue（全局）
+#if DEBUG
+                    Console.WriteLine("COM RESPONDING:");
+                    for(int i = 0; i < recBuffer.Length; ++i)
+                        Console.Write("{0:X}", recBuffer[i] + " ");
+                    Console.WriteLine();
+#endif
                 }
                 catch
                 {

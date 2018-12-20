@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
-namespace LaborProject.Api
+namespace LaborProject.ComFrames
 {
     // 存放解码收到的帧所用的方法的类
     class FrameDecoder

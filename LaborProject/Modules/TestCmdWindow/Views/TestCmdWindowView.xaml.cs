@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using LaborProject.Api;
+using LaborProject.ComFrames;
 
 namespace LaborProject.Modules.TestCmdWindow.Views
 {
@@ -22,6 +22,10 @@ namespace LaborProject.Modules.TestCmdWindow.Views
     /// </summary>
     public partial class TestCmdWindowView : UserControl
     {
+        //public static Rs232 rs232;
+        //private static bool rs232_opened = false;
+        //private static List<int> rs232_list = new List<int>();
+
         public TestCmdWindowView()
         {
             InitializeComponent();
@@ -39,6 +43,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
             //做好包的赋值工作
             //调用发送方法将其发给串口
             frames_inq.send();
+
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -51,6 +56,9 @@ namespace LaborProject.Modules.TestCmdWindow.Views
 
         }
 
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
     }
 }

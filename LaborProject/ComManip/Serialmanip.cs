@@ -12,7 +12,7 @@ namespace LaborProject
 {
     public class Serialmanip
     {
-        public static Rs232 rs232;
+        public Rs232 rs232 = new Rs232();
 
         private static bool rs232_opened = false;
         private static bool rj45_opened = false;
@@ -23,17 +23,20 @@ namespace LaborProject
 
         public void Com_open()
         {
+            // 想打开端口似乎要先获取端口的名字
             if (rs232.ComPortIsOpen == false)
             {
+                rs232.Ports_Reflash();
                 try
                 {
-                    rs232.ComPort.PortName = "PT1";
-                    int test = Convert.ToInt32(9600);
+                    rs232.ComPort.PortName = "COM3"; // 暂时先硬编码在这儿 仔细一想后期似乎也不需要更改，看吧
+                    int test = Convert.ToInt32(115200);
                     rs232.ComPort.BaudRate = test;
                     rs232.ComPort.Parity = (Parity)Convert.ToInt32(0);
                     rs232.ComPort.DataBits = Convert.ToInt32(8);
                     rs232.ComPort.StopBits = (StopBits)Convert.ToDouble(1);
                     rs232.ComPort.Open();
+                    // 在这里可以输出一下是不是打开串口了 不过没报错也可以视为就是顺利打开了
                     rs232.receive();
 
                 }

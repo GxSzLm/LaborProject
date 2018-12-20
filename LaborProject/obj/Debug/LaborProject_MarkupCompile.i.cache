@@ -8,11 +8,11 @@ C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\o
 LaborProject
 none
 false
-DEBUG;TRACE
+TRACE;DEBUG
 C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\App.xaml
 3-49731449
 
-221347964284
+221037588246
 79351361074
 Modules\Home\Views\HomeView.xaml;Modules\Shell\Views\ApplicationSettingsView.xaml;Modules\TestCmdWindow\Views\TestCmdWindowView.xaml;
 

@@ -30,10 +30,15 @@
                     Content="Hit__To__Initialize" Click="InitializeButton_Click"
                     Margin="5">
             </Button>
+
             <Button x:Name="ResetButton"
                     Content="Hit__to__Reset" Click="ResetButton_Click"
                     Margin="5">
             </Button>
+            <ComboBox x:Name="listBox" SelectionChanged="listBox_SelectionChanged">
+                <ComboBoxItem x:Name="PortList1" IsSelected="True">Port1</ComboBoxItem>
+                <ComboBoxItem x:Name="PortList2">Port2</ComboBoxItem>
+            </ComboBox>
         </StackPanel>
 
         <TextBlock Name="OutputWindow"  
