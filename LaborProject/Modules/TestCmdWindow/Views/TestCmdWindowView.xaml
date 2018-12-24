@@ -26,6 +26,10 @@
                     VerticalAlignment="Top"
                     Margin="0">
             <Label HorizontalAlignment="Center">AREA 1</Label>
+            <Button Name="OpenComButton"
+                    Content="Hit__To__Open__COM" Click="OpenComButton_Click"
+                    Margin="5">
+            </Button>
             <Button Name="InitializeButton"
                     Content="Hit__To__Initialize" Click="InitializeButton_Click"
                     Margin="5">
@@ -57,6 +61,7 @@
                  TextChanged="TheTextBox_TextChanged" IsReadOnly="True"
                  Background="White">
             输出内容显示区域
+            
         </TextBox>
     </Grid>
 </UserControl>

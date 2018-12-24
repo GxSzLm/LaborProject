@@ -8,11 +8,12 @@ using System.Windows;
 using System.IO.Ports;
 
 
-namespace LaborProject
+namespace LaborProject.ComManip
 {
     public class Serialmanip
     {
         public Rs232 rs232 = new Rs232();
+        
 
         private static bool rs232_opened = false;
         private static bool rj45_opened = false;
@@ -60,10 +61,7 @@ namespace LaborProject
                 {
                     rs232.RecStaus = true;
                 }
-
             }
-
-
         }
 
         public void Com_close()

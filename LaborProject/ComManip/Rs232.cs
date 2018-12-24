@@ -12,8 +12,43 @@ using System.Threading;
 using System.Collections;
 
 
-namespace LaborProject
+namespace LaborProject.ComManip
 {
+    // 事件参数声明（时间所要用到的附加信息（我想传递的字符串（装起来的）））
+    public class FrameReceivedArgs : EventArgs
+    {
+        public string IncomingFrame { get; }
+
+        public FrameReceivedArgs(string frame)
+        {
+            IncomingFrame = frame;
+        }
+    }
+
+    // 接收到的时候，通过这个东西来通知上面的UI层，并且把内容也发上去。
+    public class Rs232_Received
+    {
+        public event EventHandler<FrameReceivedArgs> NewFrame;
+        //定义触发事件的方法
+        protected virtual void OnNewFrame(FrameReceivedArgs e)
+        {
+            // 第二种做法
+            //EventHandler<FrameReceivedArgs> temp = NewFrame;
+            //if (temp != null)
+            //{
+            //    temp(this, e);
+            //}
+            NewFrame?.Invoke(this, e); // 这是被注释掉的部分的简化版本，VS给我优化的
+        }
+        // 包装好事件参数，调用事件触发函数。
+        public void ReceivedNewFrame(string s)
+        {
+            FrameReceivedArgs e = new FrameReceivedArgs(s);
+            OnNewFrame(e);
+        }
+        // end of event things
+    }
+
     public class Rs232
     {                                                                                                                       
         public SerialPort ComPort;
@@ -31,6 +66,11 @@ namespace LaborProject
         private static byte[] Send_data;
         public Queue recQueue = new Queue();//接收数据过程中，接收数据线程与数据处理线程直接传递的队列，先进先出
 
+
+        string outStr = "";
+        public Rs232_Received rsr = new Rs232_Received();
+
+        // 构造函数
         public Rs232()
         {
             ComPort = new SerialPort();
@@ -145,7 +185,14 @@ namespace LaborProject
         public void receive()
         {
             ComPort.DataReceived += new SerialDataReceivedEventHandler(ComReceive);//串口接收中断
+            // 在这里将事件与事件处理程序关联起来（通过委托，即SerialDataReceivedEventHandler）
+            // 也就是说，当DataReceived这一事件发生时，就会通知SubscribeReiceived方法进行输出。（吧）
+            // 也就是说，这里的DataReceived事件是System.IO.Ports里面已经定义好的
+            // 但是他似乎封装的过于完全了，我需要自己的事件。
+            //ComPort.DataReceived += new SerialDataReceivedEventHandler(Modules.TestCmdWindow.Views.TestCmdWindowView.SubscribeReceived);
         }
+        //public event EventHandler RecvOutStr_UpdateEvent;   // 声明事件
+
         private void ComReceive(object sender, SerialDataReceivedEventArgs e)//接收数据 中断只标志有数据需要读取，读取操作在中断外进行
         {
             if (WaitClose) return;//如果正在关闭串口，则直接返回
@@ -153,30 +200,51 @@ namespace LaborProject
             if (RecStaus)//如果已经开启接收
             {
                 byte[] recBuffer;//接收缓冲区
-                try
+                //try
                 {
                     recBuffer = new byte[ComPort.BytesToRead];//接收数据缓存大小
                     ComPort.Read(recBuffer, 0, recBuffer.Length);//读取数据
                     recQueue.Enqueue(recBuffer);//读取数据入列Enqueue（全局）
+                    
+                    // 显示部分
 #if DEBUG
                     Console.WriteLine("COM RESPONDING:");
                     for(int i = 0; i < recBuffer.Length; ++i)
-                        Console.Write("{0:X}", recBuffer[i] + " ");
-                    Console.WriteLine();
+                        Console.Write("{0:X}", recBuffer[i] + " "); 
 #endif
+                    
+                    int cnter = 0;
+                    for (int i = 0; i < recBuffer.Length; ++i, ++cnter)
+                    {
+                        if(cnter == 1)
+                        {
+                            cnter = 0;
+                            outStr = outStr + " ";
+                        }
+                        outStr = outStr + recBuffer[i].ToString("X2");
+                    }
+                    Console.WriteLine(outStr + Environment.NewLine);
+                    // 把接收到的帧传到上面去显示一下
+                    rsr.ReceivedNewFrame(outStr);
+                    outStr = null;
                 }
-                catch
-                {
+                //catch
+                //{
 
-                    MessageBox.Show("无法接收数据，原因未知！");
+                //    MessageBox.Show("无法接收数据，原因未知！");
 
-                }
+                //}
 
             }
             else//暂停接收
             {
                 ComPort.DiscardInBuffer();//清接收缓存
             }
+        }
+
+        private void Notification_NewFrame(object sender, FrameReceivedArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
     public class customer
