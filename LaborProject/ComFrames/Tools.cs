@@ -28,5 +28,35 @@ namespace LaborProject.ComFrames
             //返回byte数组
             return bytes;
         }
+
+        // 自定义几个键值对
+        //public struct FMap
+        //{
+        //    public string key_en;
+        //    public string ket_zh;
+        //    public int value;
+
+        //    public FMap(string a, string b, int c)
+        //    {
+        //        key_en = a;
+        //        ket_zh = b;
+        //        value = c;
+        //    }
+        //}
+
+        public struct FMap
+        {
+            public string key_en;
+            public string ket_zh;
+            public string value;
+
+            public FMap(string a, string b, string c)
+            {
+                key_en = a;
+                ket_zh = b;
+                value = c;
+            }
+
+        }
     }
 }

@@ -46,3 +46,4 @@ C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\o
 C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\obj\x86\Debug\LaborProject.csproj.GenerateResource.Cache
 C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\obj\x86\Debug\LaborProject.exe
 C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\obj\x86\Debug\LaborProject.pdb
+C:\Users\gonga\documents\visual studio 2015\Projects\LaborProject\LaborProject\obj\x86\Debug\LaborProject.csprojResolveAssemblyReference.cache

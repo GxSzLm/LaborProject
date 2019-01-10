@@ -37,12 +37,23 @@ namespace LaborProject.Modules.TestCmdWindow.Views
         // 是否第一次进行初始化（显示相关文字）
         private bool is_initialized = false;
 
+        // 端口状态相关数据
+        private int portNum = 0;
+        private struct portStatus
+        {
+            public bool isAvailable;
+            public bool isConnected;
+        }
+        private portStatus[] ports = new portStatus[4];
+
+
+
         // 用来打开串口的按钮
         private void OpenComButton_Click(object sender, RoutedEventArgs e)
         {
-            if(serial != null)// && serial.rs232.ComPortIsOpen)      // 用串口的这个参数来获取串口是否打开这一状态
+            if(serial != null && serial.rs232.ComPortIsOpen)      // 用串口的这个参数来获取串口是否打开这一状态
             {
-                // 打开了就提示一下，啥也不干
+                // 已经打开了就提示一下，啥也不干
                 MessageBox.Show("串口已经打开");
                 return;
             }
@@ -53,7 +64,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 serial.Com_open();
 
                 // 应该都会成功吧，如果不成功应该在底层就会报错。保险起见留一个这个
-                if (true)//(serial.rs232.ComPortIsOpen)
+                if (serial.rs232.ComPortIsOpen)
                 {
                     TheTextBox.Text = "COM3 opened." + Environment.NewLine;
                 }
@@ -69,7 +80,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
         private void InitializeButton_Click(object sender, RoutedEventArgs e)
         {
             // 确认串口已经被打开
-            if (serial != null)// && serial.rs232.ComPortIsOpen)
+            if (serial != null && serial.rs232.ComPortIsOpen)
             {
                 // 按钮被按下后进行初始化，发送对应的帧
                 // 第一次被按下的时候现实性初始化相关字样
@@ -87,6 +98,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 // 字符串保存即将发出去的帧内容，然后显示
                 string outStr = frames_inq.FrameBytesInString();        
                 TheTextBox.AppendText("Sending inquiry frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
+                TheTextBox.ScrollToEnd();
 
                 // 注册等待接收事件
                 serial.rs232.rsr.NewFrame += ComFrameUp;
@@ -109,6 +121,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
             // 参考了https://blog.csdn.net/u014117094/article/details/47776165
             Dispatcher.Invoke(new Action(() => {
                 TheTextBox.AppendText("Frame received:  " + e.IncomingFrame + Environment.NewLine + Environment.NewLine);
+                TheTextBox.ScrollToEnd();
             }) );
 
             // 显示一次之后就取消委托，下次要再显示下次再添加委托。不然每次“初始化”都增加一个委托，每次都多显示一行同样的内容。

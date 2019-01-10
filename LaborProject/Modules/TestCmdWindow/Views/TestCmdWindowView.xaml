@@ -59,6 +59,7 @@
         <TextBox Name="TheTextBox"
                  Grid.Column="1" Margin="10" 
                  TextChanged="TheTextBox_TextChanged" IsReadOnly="True"
+                 VerticalScrollBarVisibility="Auto"
                  Background="White">
             输出内容显示区域
             
