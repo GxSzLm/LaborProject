@@ -138,9 +138,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComFrames\FrameDecoder.cs" />
+    <Compile Include="ComFrames\FrameClassifier.cs" />
     <Compile Include="ComFrames\Frames.cs" />
-    <Compile Include="ComFrames\Tools.cs" />
+    <Compile Include="Tools.cs" />
     <Compile Include="ComManip\Rs232.cs" />
     <Compile Include="ComManip\Serialmanip.cs" />
     <Compile Include="Modules\Home\Module.cs" />
@@ -155,9 +155,11 @@
     </Compile>
     <Compile Include="Modules\TestCmdWindow\Module.cs" />
     <Compile Include="Modules\TestCmdWindow\ViewModels\TestCmdWindowViewModel.cs" />
+    <Compile Include="Ports.cs" />
     <Compile Include="Modules\TestCmdWindow\Views\TestCmdWindowView.xaml.cs">
       <DependentUpon>TestCmdWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\TestCmdWindow\Views\Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -201,6 +203,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Administrator\Desktop\gemini-0.7.0\gemini-0.7.0\src\Gemini.Modules.Output\Gemini.Modules.Output.csproj">
+      <Project>{b78aacc8-5a16-4951-83ad-b78d1c80a258}</Project>
+      <Name>Gemini.Modules.Output</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

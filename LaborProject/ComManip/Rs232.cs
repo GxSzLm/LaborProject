@@ -18,10 +18,12 @@ namespace LaborProject.ComManip
     public class FrameReceivedArgs : EventArgs
     {
         public string IncomingFrame { get; }
+        public byte[] IncomingFrameBytes { get; }
 
-        public FrameReceivedArgs(string frame)
+        public FrameReceivedArgs(string frame, byte[] frame_b)
         {
             IncomingFrame = frame;
+            IncomingFrameBytes = frame_b;
         }
     }
 
@@ -41,9 +43,9 @@ namespace LaborProject.ComManip
             NewFrame?.Invoke(this, e); // 这是被注释掉的部分的简化版本，VS给我优化的
         }
         // 包装好事件参数，调用事件触发函数。
-        public void ReceivedNewFrame(string s)
+        public void ReceivedNewFrame(string s, byte[] b)
         {
-            FrameReceivedArgs e = new FrameReceivedArgs(s);
+            FrameReceivedArgs e = new FrameReceivedArgs(s, b);
             OnNewFrame(e);
         }
         // end of event things
@@ -225,7 +227,7 @@ namespace LaborProject.ComManip
                     }
                     Console.WriteLine(outStr + Environment.NewLine);
                     // 把接收到的帧传到上面去显示一下
-                    rsr.ReceivedNewFrame(outStr);
+                    rsr.ReceivedNewFrame(outStr, recBuffer);
                     outStr = null;
                 }
                 //catch

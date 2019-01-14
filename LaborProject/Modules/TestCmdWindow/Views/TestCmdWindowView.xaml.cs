@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Caliburn.Micro;
+using Gemini.Modules.Output;
+
 using LaborProject.ComFrames;
 using LaborProject.ComManip;
 
@@ -23,30 +26,13 @@ namespace LaborProject.Modules.TestCmdWindow.Views
     /// </summary>
     public partial class TestCmdWindowView : UserControl
     {
+        private readonly IOutput _output;
         public TestCmdWindowView()
         {
             InitializeComponent();
+            _output = IoC.Get<IOutput>();
+            _output.AppendLine("I AM READY.");
         }
-
-        // 声明串口
-        private Serialmanip serial;
-        
-        // 用来显示接收到的帧
-        public static string RecvOutStr;
-
-        // 是否第一次进行初始化（显示相关文字）
-        private bool is_initialized = false;
-
-        // 端口状态相关数据
-        private int portNum = 0;
-        private struct portStatus
-        {
-            public bool isAvailable;
-            public bool isConnected;
-        }
-        private portStatus[] ports = new portStatus[4];
-
-
 
         // 用来打开串口的按钮
         private void OpenComButton_Click(object sender, RoutedEventArgs e)
@@ -67,6 +53,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 if (serial.rs232.ComPortIsOpen)
                 {
                     TheTextBox.Text = "COM3 opened." + Environment.NewLine;
+                    _output.AppendLine("COM3 opened." + Environment.NewLine);
                 }
                 else
                 {
@@ -86,7 +73,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 // 第一次被按下的时候现实性初始化相关字样
                 if (!is_initialized)
                 {
-                    TheTextBox.AppendText("Initialize process activated." + Environment.NewLine
+                    _output.AppendLine("Initialize process activated." + Environment.NewLine
                     + "Initializing..." + Environment.NewLine + Environment.NewLine);
                     is_initialized = true;
                 }
@@ -97,7 +84,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 // 做好帧的赋值工作（这个帧的值都是确定的）
                 // 字符串保存即将发出去的帧内容，然后显示
                 string outStr = frames_inq.FrameBytesInString();        
-                TheTextBox.AppendText("Sending inquiry frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
+                _output.AppendLine("Sending inquiry frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
                 TheTextBox.ScrollToEnd();
 
                 // 注册等待接收事件
@@ -112,22 +99,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 return;
             }
         }
-
-        // 当下层帧来的时候在这儿显示一下原始内容
-        private void ComFrameUp(object sender, FrameReceivedArgs e)
-        {
-            // 如果不用下面这一行，我想要的对象还被子线程所拥有，无法用来改变UI层的元素
-            // 按这一行这样操作一下就可以了。虽然我也不清楚为什么，C#这边还需要学习。
-            // 参考了https://blog.csdn.net/u014117094/article/details/47776165
-            Dispatcher.Invoke(new Action(() => {
-                TheTextBox.AppendText("Frame received:  " + e.IncomingFrame + Environment.NewLine + Environment.NewLine);
-                TheTextBox.ScrollToEnd();
-            }) );
-
-            // 显示一次之后就取消委托，下次要再显示下次再添加委托。不然每次“初始化”都增加一个委托，每次都多显示一行同样的内容。
-            serial.rs232.rsr.NewFrame -= ComFrameUp;
-        }
-
+       
         // reset按钮。这里应该向串口发送reset那个帧。
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
@@ -146,5 +118,60 @@ namespace LaborProject.Modules.TestCmdWindow.Views
 
         }
 
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 确认串口已经被打开
+            if (serial != null && serial.rs232.ComPortIsOpen)
+            {
+                // 按钮被按下后发送对应的测试帧
+                // 准备好要发送的帧
+                PortConfigFrame frames_port_config = new PortConfigFrame();
+
+                // 做好帧的赋值工作（这个帧的值都是确定的）
+                // 字符串保存即将发出去的帧内容，然后显示
+                string outStr = frames_port_config.FrameBytesInString();
+                _output.AppendLine("Sending test frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
+                TheTextBox.ScrollToEnd();
+
+                // 注册等待接收事件
+                serial.rs232.rsr.NewFrame += ComFrameUp;
+
+                // 调用发送方法将其发给串口
+                frames_port_config.SendFrame(serial);
+            }
+            else
+            {
+                MessageBox.Show("未打开串口。");
+                return;
+            }
+        }
+
+        private void TestButton2_Click(object sender, RoutedEventArgs e)
+        {
+            // 确认串口已经被打开
+            if (serial != null && serial.rs232.ComPortIsOpen)
+            {
+                // 按钮被按下后发送对应的测试帧
+                // 准备好要发送的帧
+                PortParameterInquiryFrame frames_portpara_inq = new PortParameterInquiryFrame();
+
+                // 做好帧的赋值工作（这个帧的值都是确定的）
+                // 字符串保存即将发出去的帧内容，然后显示
+                string outStr = frames_portpara_inq.FrameBytesInString();
+                _output.AppendLine("Sending test frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
+                TheTextBox.ScrollToEnd();
+
+                // 注册等待接收事件
+                serial.rs232.rsr.NewFrame += ComFrameUp;
+
+                // 调用发送方法将其发给串口
+                frames_portpara_inq.SendFrame(serial);
+            }
+            else
+            {
+                MessageBox.Show("未打开串口。");
+                return;
+            }
+        }
     }
 }

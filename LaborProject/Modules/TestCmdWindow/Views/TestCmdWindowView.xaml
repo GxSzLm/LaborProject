@@ -13,6 +13,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -20,9 +21,9 @@
         <Grid.Background>
             <SolidColorBrush Color="{Binding Background, FallbackValue=White}" />
         </Grid.Background>
-        
-        <StackPanel Name="Panel1"
-                    Grid.Column="0" Grid.Row="0"
+
+        <StackPanel Name="ButtonPanel"
+                    Grid.Column="1" Grid.Row="0"
                     VerticalAlignment="Top"
                     Margin="0">
             <Label HorizontalAlignment="Center">AREA 1</Label>
@@ -43,10 +44,18 @@
                 <ComboBoxItem x:Name="PortList1" IsSelected="True">Port1</ComboBoxItem>
                 <ComboBoxItem x:Name="PortList2">Port2</ComboBoxItem>
             </ComboBox>
+            <Button x:Name="TestButton"
+                    Content="Hit__to__Test" Click="TestButton_Click"
+                    Margin="5" RenderTransformOrigin="0.501,0.5">
+            </Button>
+            <Button x:Name="TestButton2"
+                    Content="Hit__to__Test2" Click="TestButton2_Click"
+                    Margin="5" RenderTransformOrigin="0.501,0.5">
+            </Button>
         </StackPanel>
 
         <TextBlock Name="OutputWindow"  
-                   Grid.Column="2" TextAlignment="{Binding TextAlignment, FallbackValue=Center}"
+                   Grid.Column="3" TextAlignment="{Binding TextAlignment, FallbackValue=Center}"
 				   VerticalAlignment="Center" Margin="10,10,10,10"
 				   FontSize="24" Text="{Binding Text}"
                    TextWrapping="Wrap">
@@ -55,14 +64,27 @@
                 <SolidColorBrush Color="{Binding Foreground, FallbackValue=Black}" />
             </TextBlock.Foreground>
         </TextBlock>
-        
+
         <TextBox Name="TheTextBox"
-                 Grid.Column="1" Margin="10" 
+                 Grid.Column="2" Margin="10" 
                  TextChanged="TheTextBox_TextChanged" IsReadOnly="True"
                  VerticalScrollBarVisibility="Auto"
                  Background="White">
             输出内容显示区域
-            
+
         </TextBox>
+        <StackPanel x:Name="TreePanel" Grid.Column="0" Grid.Row="0"
+                    HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top">
+            <TreeView x:Name="treeView" Margin="0"  Background="White"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TreeViewItem Header="Port">
+                    <TreeViewItem Header="Port0"/>
+                    <TreeViewItem Header="Port1"/>
+                    <TreeViewItem Header="Port2"/>
+                    <TreeViewItem Header="Port3"/>
+                </TreeViewItem>
+
+            </TreeView>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -30,7 +30,10 @@ namespace LaborProject.ComManip
                 rs232.Ports_Reflash();
                 try
                 {
-                    rs232.ComPort.PortName = "COM3"; // 暂时先硬编码在这儿 仔细一想后期似乎也不需要更改，看吧
+                    // 端口的名字暂时先硬编码在这儿
+                    rs232.ComPort.PortName = "COM8";        // For Windows
+                    // rs232.ComPort.PortName = "COM3";     // For MacOS
+                    
                     int test = Convert.ToInt32(115200);
                     rs232.ComPort.BaudRate = test;
                     rs232.ComPort.Parity = (Parity)Convert.ToInt32(0);

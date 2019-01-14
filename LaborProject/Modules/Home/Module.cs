@@ -24,19 +24,19 @@ namespace LaborProject.Modules.Home
         public static MenuItemDefinition ViewHelixMenuItem = new CommandMenuItemDefinition<ViewHelixCommandDefinition>(
             ViewDemoMenuGroup, 1);*/
 
-        public override IEnumerable<IDocument> DefaultDocuments
-        {
-            get
-            {
-                yield return IoC.Get<HomeViewModel>();
-                //yield return IoC.Get<HelixViewModel>();
-            }
-        }
+        //public override IEnumerable<IDocument> DefaultDocuments
+        //{
+        //    get
+        //    {
+        //        yield return IoC.Get<HomeViewModel>();
+        //        //yield return IoC.Get<HelixViewModel>();
+        //    }
+        //}
 
-        public override void PostInitialize()
-        {
-            //IoC.Get<IPropertyGrid>().SelectedObject = IoC.Get<HomeViewModel>();
-            Shell.OpenDocument(IoC.Get<HomeViewModel>());
-        }
+        //public override void PostInitialize()
+        //{
+        //    //IoC.Get<IPropertyGrid>().SelectedObject = IoC.Get<HomeViewModel>();
+        //    Shell.OpenDocument(IoC.Get<HomeViewModel>());
+        //}
     }
 }
