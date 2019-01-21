@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 
 using LaborProject.ComFrames;
 using LaborProject.ComManip;
+using LaborProject.Modules.GePort;
+using LaborProject.Models;
 
 namespace LaborProject.Modules.TestCmdWindow.Views
 {
@@ -31,11 +33,11 @@ namespace LaborProject.Modules.TestCmdWindow.Views
 
         // 端口
         int PortNum = 0;
-        Ports[] port = new Ports[] {
-            new Ports(),
-            new Ports(),
-            new Ports(),
-            new Ports()
+        TesterPort[] port = new TesterPort[] {
+            new TesterPort(0),
+            new TesterPort(1),
+            new TesterPort(2),
+            new TesterPort(3)
         }; // 先默认他是四个
 
         // 当下层帧来的时候在这儿显示一下原始内容
@@ -96,7 +98,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                         }
 
                         _output.AppendLine("端口数量：" + PortNum + "，连接状态分别为：" + 
-                                              port[0].isConnected + "," + port[1].isConnected + "," + port[2].isConnected + "," + port[3].isConnected + Environment.NewLine);
+                                             port[0].isConnected + "," + port[1].isConnected + "," + port[2].isConnected + "," + port[3].isConnected + Environment.NewLine);
                         break;
                     }
                 case FrameClassifier.IncomingFrameTypes.Feedback_Inquiry_Parameter:

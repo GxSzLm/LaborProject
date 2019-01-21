@@ -53,3 +53,5 @@ E:\VS2015Program\LaborProject\LaborProject\obj\Release\LaborProject.Properties.R
 E:\VS2015Program\LaborProject\LaborProject\obj\Release\LaborProject.csproj.GenerateResource.Cache
 E:\VS2015Program\LaborProject\LaborProject\obj\Release\LaborProject.exe
 E:\VS2015Program\LaborProject\LaborProject\obj\Release\LaborProject.pdb
+E:\VS2015Program\LaborProject\LaborProject\obj\Release\Modules\GeTreeView\Views\GeTreeViewView.baml
+E:\VS2015Program\LaborProject\LaborProject\obj\Release\Modules\GeTreeView\Views\GeTreeViewView.g.cs

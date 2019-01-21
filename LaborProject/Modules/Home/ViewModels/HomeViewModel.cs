@@ -176,5 +176,7 @@ namespace LaborProject.Modules.Home.ViewModels
             // load TextAlignment as a string
             TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
         }
+
+        
     }
 }

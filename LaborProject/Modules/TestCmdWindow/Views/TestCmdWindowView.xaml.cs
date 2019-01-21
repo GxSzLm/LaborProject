@@ -130,7 +130,7 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 // 做好帧的赋值工作（这个帧的值都是确定的）
                 // 字符串保存即将发出去的帧内容，然后显示
                 string outStr = frames_port_config.FrameBytesInString();
-                _output.AppendLine("Sending test frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
+                //_output.AppendLine("Sending test frame......Content: " + outStr + Environment.NewLine + Environment.NewLine);
                 TheTextBox.ScrollToEnd();
 
                 // 注册等待接收事件
@@ -172,6 +172,42 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                 MessageBox.Show("未打开串口。");
                 return;
             }
+        }
+
+        private void Tree_Port0_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Port1Panel.Visibility = Visibility.Hidden;
+            Port2Panel.Visibility = Visibility.Hidden;
+            Port3Panel.Visibility = Visibility.Hidden;
+
+            Port0Panel.Visibility = Visibility.Visible;
+        }
+
+        private void Tree_Port1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Port0Panel.Visibility = Visibility.Hidden;
+            Port2Panel.Visibility = Visibility.Hidden;
+            Port3Panel.Visibility = Visibility.Hidden;
+
+            Port1Panel.Visibility = Visibility.Visible;
+        }
+
+        private void Tree_Port2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Port0Panel.Visibility = Visibility.Hidden;
+            Port1Panel.Visibility = Visibility.Hidden;
+            Port3Panel.Visibility = Visibility.Hidden;
+
+            Port2Panel.Visibility = Visibility.Visible;
+        }
+
+        private void Tree_Port3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Port0Panel.Visibility = Visibility.Hidden;
+            Port1Panel.Visibility = Visibility.Hidden;
+            Port2Panel.Visibility = Visibility.Hidden;
+
+            Port3Panel.Visibility = Visibility.Visible;
         }
     }
 }

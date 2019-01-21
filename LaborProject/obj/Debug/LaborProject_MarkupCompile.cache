@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\VS2015Program\LaborProject\LaborProject\obj\Debug\
+C:\Users\F627\Documents\Visual Studio 2015\Projects\LaborProject\LaborProject\obj\Debug\
 LaborProject
 none
 false
 TRACE;DEBUG
-E:\VS2015Program\LaborProject\LaborProject\App.xaml
-3-49731449
+C:\Users\F627\Documents\Visual Studio 2015\Projects\LaborProject\LaborProject\App.xaml
+51411937782
 
-201491544225
-80-328150578
-Modules\Home\Views\HomeView.xaml;Modules\Shell\Views\ApplicationSettingsView.xaml;Modules\TestCmdWindow\Views\TestCmdWindowView.xaml;
+28-681020118
+80-1181946084
+Modules\GeTreeView\Views\GeTreeViewView.xaml;Modules\Home\Views\HomeView.xaml;Modules\GePort\Views\PortView.xaml;Modules\Shell\Views\ApplicationSettingsView.xaml;Modules\TestCmdWindow\Views\TestCmdWindowView.xaml;
 
 False
 

@@ -8,52 +8,76 @@
              mc:Ignorable="d" 
              d:DesignHeight="580.256" d:DesignWidth="600"
              Background="Gray">
-    <Grid ShowGridLines="True" Margin="0,0,0,0">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <Grid.Background>
-            <SolidColorBrush Color="{Binding Background, FallbackValue=White}" />
+            <SolidColorBrush Color="White" />
         </Grid.Background>
-
+        
+        <!--端口的树状列表，装在一个StackPanel里面-->
+        <StackPanel x:Name="TreePanel" Grid.Column="0" Grid.Row="0"
+                    HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch">
+            <TreeView x:Name="treeView" Margin="0"  Background="White" BorderThickness="0"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TreeViewItem Header="Port" Height="Auto">
+                    <TreeViewItem Name="Tree_Port0" Header="Port0" 
+                                  MouseDoubleClick="Tree_Port0_MouseDoubleClick"/>
+                    <TreeViewItem Name="Tree_Port1" Header="Port1"
+                                  MouseDoubleClick="Tree_Port1_MouseDoubleClick"/>
+                    <TreeViewItem Name="Tree_Port2" Header="Port2"
+                                  MouseDoubleClick="Tree_Port2_MouseDoubleClick"/>
+                    <TreeViewItem Name="Tree_Port3" Header="Port3"
+                                  MouseDoubleClick="Tree_Port3_MouseDoubleClick"/>
+                </TreeViewItem>
+            </TreeView>
+        </StackPanel>
+        
+        <!--供测试用的按钮面板-->
         <StackPanel Name="ButtonPanel"
                     Grid.Column="1" Grid.Row="0"
                     VerticalAlignment="Top"
                     Margin="0">
             <Label HorizontalAlignment="Center">AREA 1</Label>
+            <!--打开串口-->
             <Button Name="OpenComButton"
                     Content="Hit__To__Open__COM" Click="OpenComButton_Click"
                     Margin="5">
             </Button>
+            <!--初始化，其实就是发送一个 端口连接状态查询帧-->
             <Button Name="InitializeButton"
                     Content="Hit__To__Initialize" Click="InitializeButton_Click"
                     Margin="5">
             </Button>
-
+            <!--Reset按钮，功能还没有写-->
             <Button x:Name="ResetButton"
                     Content="Hit__to__Reset" Click="ResetButton_Click"
                     Margin="5">
             </Button>
-            <ComboBox x:Name="listBox" SelectionChanged="listBox_SelectionChanged">
-                <ComboBoxItem x:Name="PortList1" IsSelected="True">Port1</ComboBoxItem>
-                <ComboBoxItem x:Name="PortList2">Port2</ComboBoxItem>
-            </ComboBox>
+            <!--测试按钮1-->
+            <!--当前作用是向端口1发送一个端口配置帧-->
             <Button x:Name="TestButton"
                     Content="Hit__to__Test" Click="TestButton_Click"
                     Margin="5" RenderTransformOrigin="0.501,0.5">
             </Button>
+            <!--测试按钮2-->
+            <!--当前作用是向端口1发送一个端口配置查询帧，用来验证上面那个操作是不是成功了-->
             <Button x:Name="TestButton2"
                     Content="Hit__to__Test2" Click="TestButton2_Click"
                     Margin="5" RenderTransformOrigin="0.501,0.5">
             </Button>
         </StackPanel>
-
+        
+        <!--本来想做个输出窗口，后来用作保留区域了-->
         <TextBlock Name="OutputWindow"  
                    Grid.Column="3" TextAlignment="{Binding TextAlignment, FallbackValue=Center}"
 				   VerticalAlignment="Center" Margin="10,10,10,10"
@@ -65,6 +89,7 @@
             </TextBlock.Foreground>
         </TextBlock>
 
+        <!--Gemini输出模块搞定之前自用的输出窗口，应该可以准备退休了-->
         <TextBox Name="TheTextBox"
                  Grid.Column="2" Margin="10" 
                  TextChanged="TheTextBox_TextChanged" IsReadOnly="True"
@@ -73,18 +98,70 @@
             输出内容显示区域
 
         </TextBox>
-        <StackPanel x:Name="TreePanel" Grid.Column="0" Grid.Row="0"
-                    HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top">
-            <TreeView x:Name="treeView" Margin="0"  Background="White"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <TreeViewItem Header="Port">
-                    <TreeViewItem Header="Port0"/>
-                    <TreeViewItem Header="Port1"/>
-                    <TreeViewItem Header="Port2"/>
-                    <TreeViewItem Header="Port3"/>
-                </TreeViewItem>
 
-            </TreeView>
+        
+        <!--边缘线设置，稍微分割一下几个区域-->
+        <Border BorderBrush="DarkGray" BorderThickness="0 0 1 0" ></Border>
+        <Border Grid.ColumnSpan="4" BorderBrush="DarkGray" BorderThickness="0 0 0 1" ></Border>
+        
+        <!--四个端口的参数的显示和控制区域，由四个重叠的StackPanel组成-->
+        <!--每个端口的显示部分显示端口的参数和当前状态等，这些部分应当做数据绑定，绑定到Process中的变量-->
+        <Label HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4">AREA 2: Port Area</Label>
+        <!--端口0-->
+        <StackPanel Name="Port0Panel"
+                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                    Margin="0" Visibility="Hidden">
+            <TextBlock x:Name="textBlock_Port0_Name" TextWrapping="Wrap" Text="Port 0" 
+                       Margin="0,0,0,10"/>
+            <TextBlock x:Name="textBlock_Port0_Ip" TextWrapping="Wrap" Text="IP Address" 
+                       Margin="0"/>
+            <TextBox/>
+            <TextBlock x:Name="textBlock_Port0_Mac" TextWrapping="Wrap" Text="Mac Address" 
+                       Margin="0"/>
+            <TextBox />
+        </StackPanel>
+        <!--端口1-->
+        <StackPanel Name="Port1Panel"
+                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                    Margin="0" Visibility="Hidden">
+            <TextBlock x:Name="textBlock_Port1_Name" TextWrapping="Wrap" Text="Port 1" 
+                       Margin="0,0,0,10"/>
+            <TextBlock x:Name="textBlock_Port1_Ip" TextWrapping="Wrap" Text="IP Address" 
+                       Margin="0"/>
+            <TextBox/>
+            <TextBlock x:Name="textBlock_Port1_Mac" TextWrapping="Wrap" Text="Mac Address" 
+                       Margin="0"/>
+            <TextBox />
+        </StackPanel>
+        <!--端口2-->
+        <StackPanel Name="Port2Panel"
+                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                    Margin="0" Visibility="Hidden">
+            <TextBlock x:Name="textBlock_Port2_Name" TextWrapping="Wrap" Text="Port 2" 
+                       Margin="0,0,0,10"/>
+            <TextBlock x:Name="textBlock_Port2_Ip" TextWrapping="Wrap" Text="IP Address" 
+                       Margin="0"/>
+            <TextBox/>
+            <TextBlock x:Name="textBlock_Port2_Mac" TextWrapping="Wrap" Text="Mac Address" 
+                       Margin="0"/>
+            <TextBox />
+        </StackPanel>
+        <!--端口3-->
+        <StackPanel Name="Port3Panel"
+                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                    Margin="0" Visibility="Hidden">
+            <TextBlock x:Name="textBlock_Port3_Name" TextWrapping="Wrap" Text="Port 3" 
+                       Margin="0,0,0,10"/>
+            <TextBlock x:Name="textBlock_Port3_Ip" TextWrapping="Wrap" Text="IP Address" 
+                       Margin="0"/>
+            <TextBox/>
+            <TextBlock x:Name="textBlock_Port3_Mac" TextWrapping="Wrap" Text="Mac Address" 
+                       Margin="0"/>
+            <TextBox />
         </StackPanel>
     </Grid>
 </UserControl>
