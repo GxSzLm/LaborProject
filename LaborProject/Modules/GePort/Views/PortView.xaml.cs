@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using LaborProject.Modules.GePort.ViewModels;
+using LaborProject.Models;
 
 namespace LaborProject.Modules.GePort.Views
 {
@@ -30,7 +31,7 @@ namespace LaborProject.Modules.GePort.Views
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             //PortInstance.ThePortViewModels[0].Content_PortIp = "1.1.1.1";
-            //PortInstance.Ports[0].IpAddr.AddressInString = "1.1.1.1";
+            PortInstance.Ports[0].IpAddr = new PortIpAddress("1.1.1.1");
         }
     }
 }

@@ -88,17 +88,17 @@ namespace LaborProject.Modules.TestCmdWindow.Views
                         {
                             if(data[index] == 0x01)
                             {
-                                port[i].isConnected = true;
+                                port[i].IsConnected = true;
                             }
                             else
                             {
-                                port[i].isConnected = false;
+                                port[i].IsConnected = false;
                             }
-                            port[i].isAvailable = true;
+                            port[i].IsAvailable = true;
                         }
 
                         _output.AppendLine("端口数量：" + PortNum + "，连接状态分别为：" + 
-                                             port[0].isConnected + "," + port[1].isConnected + "," + port[2].isConnected + "," + port[3].isConnected + Environment.NewLine);
+                                             port[0].IsConnected + "," + port[1].IsConnected + "," + port[2].IsConnected + "," + port[3].IsConnected + Environment.NewLine);
                         break;
                     }
                 case FrameClassifier.IncomingFrameTypes.Feedback_Inquiry_Parameter:

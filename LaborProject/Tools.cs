@@ -34,7 +34,7 @@ namespace LaborProject
 
     public class PortIpAddress
     {
-        public byte[] _addressInBytes;
+        private byte[] _addressInBytes;
         public byte[] AddressInBytes
         {
             get
@@ -43,14 +43,14 @@ namespace LaborProject
             }
             set
             {
-                _addressInBytes = value;
+                EditIpAddrBytes(value);
                 if (_addressInString != ConvertToString(AddressInBytes))
                 {
                     _addressInString = ConvertToString(AddressInBytes);
                 }
             }
         }
-        public string _addressInString;
+        private string _addressInString;
         public string AddressInString
         {
             get
@@ -59,7 +59,7 @@ namespace LaborProject
             }
             set
             {
-                _addressInString = value;
+                EditIpAddrString(value);
                 if (_addressInBytes != ParseIp(AddressInString))
                 {
                     _addressInBytes = ParseIp(AddressInString);
@@ -79,6 +79,17 @@ namespace LaborProject
         public PortIpAddress(string ip)
         {
             AddressInString = ip;
+        }
+
+        // 修改方法
+        public void EditIpAddrString(string newip)
+        {
+            _addressInString = newip;
+        }
+
+        public void EditIpAddrBytes(byte[] newip)
+        {
+            _addressInBytes = newip;
         }
 
         // 转换方法
@@ -114,7 +125,6 @@ namespace LaborProject
 
             return addr;
         }
-
     }
 
     public class PortMacAddress
@@ -166,6 +176,8 @@ namespace LaborProject
         {
             AddressInString = mac;
         }
+
+        // 修改方法
 
         // 转换方法
         public string ConvertToString(byte[] mac)

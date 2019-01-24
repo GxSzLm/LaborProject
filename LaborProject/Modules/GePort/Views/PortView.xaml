@@ -24,9 +24,9 @@
         <GroupBox x:Name="groupBox" Header="端口信息" Margin="5"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel VerticalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <TextBlock TextWrapping="Wrap" Text="Port ID : " Margin="0,0,0,10"/>
-                    <TextBlock x:Name="Content_PortId" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                    <TextBlock x:Name="Content_PortId" TextWrapping="Wrap" Margin="0,0,0,10" Text="{Binding Content_PortId}"/>
                 </StackPanel>
                 
                 <TextBlock x:Name="Text_PortIp" TextWrapping="Wrap" Text="IP Address" 
