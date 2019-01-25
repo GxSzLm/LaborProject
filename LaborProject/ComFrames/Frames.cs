@@ -9,8 +9,23 @@ using LaborProject.ComManip;
 
 namespace LaborProject.ComFrames
 {
+    public class theFrame
+    {
+        // 辅助FrameBytesInString()函数进行输出，有的字节数组太长了
+        protected string ByteArrContent(byte[] arr)
+        {
+            string str = "";
+            for (int i = 0; i < arr.Length; ++i)
+            {
+                str = str + " " + arr[i].ToString("X2");
+            }
+            return str;
+        }
+
+    }
+
     // 数据源参数配置帧
-    public class ConfigDataSourceFrame
+    public class ConfigDataSourceFrame : theFrame
     {
         // 端口物理连接状态查询帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -79,17 +94,6 @@ namespace LaborProject.ComFrames
             frm.custom_data = custom_data;
         }
 
-        // 辅助FrameBytesInString()函数进行输出，有的字节数组太长了
-        private string ByteArrContent(byte[] arr)
-        {
-            string str = "";
-            for(int i = 0; i < arr.Length; ++i)
-            {
-                str = str + " " + arr[i].ToString("X2");
-            }
-            return str;
-        }
-
         // 将16进制的帧内容写进字符串中返回。
         public string FrameBytesInString()
         {
@@ -120,7 +124,7 @@ namespace LaborProject.ComFrames
     }
 
     // 端口配置帧
-    public class PortConfigFrame
+    public class PortConfigFrame : theFrame
     {
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
         public struct Frame_PortConfig
@@ -155,17 +159,6 @@ namespace LaborProject.ComFrames
             frm.ip_addr = new byte[4] { 0xc0, 0xA8, 0x00, 0x17 };
         }
 
-        // 辅助FrameBytesInString()函数进行输出，有的字节数组太长了
-        private string ByteArrContent(byte[] arr)
-        {
-            string str = "";
-            for (int i = 0; i < arr.Length; ++i)
-            {
-                str = str + " " + arr[i].ToString("X2");
-            }
-            return str;
-        }
-
         // 将16进制的帧内容写进字符串中返回。
         public string FrameBytesInString()
         {
@@ -186,7 +179,7 @@ namespace LaborProject.ComFrames
     }
 
     // 端口物理连接状态查询帧
-    public class TestBeginFrame
+    public class TestBeginFrame : theFrame
     {
         // 端口物理连接状态查询帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -217,17 +210,6 @@ namespace LaborProject.ComFrames
             frm.port_id[3] = port3_id;
         }
 
-        // 辅助FrameBytesInString()函数进行输出，有的字节数组太长了
-        private string ByteArrContent(byte[] arr)
-        {
-            string str = "";
-            for (int i = 0; i < arr.Length; ++i)
-            {
-                str = str + " " + arr[i].ToString("X2");
-            }
-            return str;
-        }
-
         // 将16进制的帧内容写进字符串中返回。
         public string FrameBytesInString()
         {
@@ -247,7 +229,7 @@ namespace LaborProject.ComFrames
     }
 
     // 端口物理连接状态查询帧
-    public class ConnectionStatusInquiryFrame
+    public class ConnectionStatusInquiryFrame : theFrame
     {
         // 端口物理连接状态查询帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -295,7 +277,7 @@ namespace LaborProject.ComFrames
     }
 
     // 端口参数查询帧
-    public class PortParameterInquiryFrame
+    public class PortParameterInquiryFrame : theFrame
     {
         // 端口参数查询帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -343,7 +325,7 @@ namespace LaborProject.ComFrames
     }
 
     // 开始帧
-    public class StartFrame
+    public class StartFrame : theFrame
     {
         // 开始帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -381,7 +363,7 @@ namespace LaborProject.ComFrames
     }
 
     // 复位帧
-    public class ResetFrame
+    public class ResetFrame : theFrame
     {
         // 复位帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -419,7 +401,7 @@ namespace LaborProject.ComFrames
     }
 
     // 端口状态命令帧
-    public class PortStatusCommandFrame
+    public class PortStatusCommandFrame : theFrame
     {
         // 端口状态命令帧的帧结构
         [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
@@ -462,16 +444,52 @@ namespace LaborProject.ComFrames
         }
     }
 
-    // 时延测试的数据源参数帧
-    public class Frame_TestDelay
+    // 业务帧
+    public class ServiceFrame : theFrame
     {
+        // 端口状态命令帧的帧结构
+        [StructLayout(LayoutKind.Sequential, Size = 6, Pack = 1, CharSet = CharSet.Ansi)]   // 之前采用的LayoutKind是Explicit，在该附加字段设置下无法使用byte数组
+        public struct Frame_Service
+        {
+            public byte frame_header;
+            public byte frame_type;
+            public byte port_id;
 
-    }
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            public byte[] frame_length;
 
-    // 丢包测试的数据源参数帧
-    public class Frame_TestLoss
-    {
+            public byte[] frame_data;
+        }
 
+        public Frame_Service frm;       // 使用StructToBytes方法转成byte数组前，进行了内存对齐的结构体。
+
+        // 构造函数
+        public ServiceFrame(byte port_id, byte[] frame_length, byte[] frame_data)
+        {
+            frm.frame_header = 0xff;
+            frm.frame_type = 0x05;
+            frm.port_id = port_id;
+
+            frm.frame_length = frame_length;
+            frm.frame_data = frame_data;
+        }
+
+        // 将16进制的帧内容写进字符串中返回。
+        //public string FrameBytesInString()
+        //{
+        //    return frm.frame_header.ToString("X2")
+        //        + " " + frm.frame_type.ToString("X2")
+        //        + " " + frm.parameter_type.ToString("X2")
+        //        + " " + frm.port_id.ToString("X2")
+        //        + " " + frm.command.ToString("X2");
+        //}
+
+        // 发送frm到指定的串口。
+        public bool SendFrame(Serialmanip com)
+        {
+            com.rs232.send(Tools.StructToBytes(frm));
+            return true;
+        }
     }
     
 }
